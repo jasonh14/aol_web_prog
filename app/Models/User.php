@@ -9,7 +9,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Foundation\Auth\User as Authenticatable;
 /**
  * Class User
  * 
@@ -27,7 +27,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @package App\Models
  */
-class User extends Model
+class User extends Authenticatable
 {
 	protected $table = 'users';
 	protected $primaryKey = 'user_id';
@@ -40,7 +40,8 @@ class User extends Model
 	];
 
 	protected $hidden = [
-		'password'
+		'password',
+		'remember_token'
 	];
 
 	protected $fillable = [
@@ -49,7 +50,8 @@ class User extends Model
 		'password',
 		'createdAt',
 		'deletedAt',
-		'updatedAt'
+		'updatedAt',
+		'remember_token'
 	];
 
 	public function chatbots()

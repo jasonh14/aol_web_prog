@@ -1,8 +1,23 @@
-@extends('master')
-
-@section('title', 'Home Page')
+@extends('layouts.app')
 
 @section('content')
-    <h1 class="font-semibold text-4xl text-blue-400">Welcome to the Home Page</h1>
-    <p>This is the content of the home page.</p>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">{{ __('Dashboard') }}</div>
+
+                <div class="card-body">
+                    @if (session('status'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+
+                    {{ __('You are logged in!') }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection

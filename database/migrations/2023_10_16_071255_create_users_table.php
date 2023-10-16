@@ -21,6 +21,7 @@ return new class extends Migration
             $table->timestamp('createdAt')->useCurrent();
             $table->timestamp('deletedAt')->nullable();
             $table->timestamp('updatedAt')->nullable();
+            $table->rememberToken();
         });
     }
 
