@@ -22,10 +22,10 @@
 <body class="bg-gray-50 text-gray-900">
 
     <div id="app">
-        <nav class="bg-white p-6 shadow-md">
+        <nav class="bg-white p-6 ">
             <div class="container mx-auto">
                 <div class="flex justify-between items-center">
-                    <a class="text-2xl font-bold text-blue-600" href="{{ url('/') }}">
+                    <a class="text-2xl font-bold text-cyan-600" href="{{ url('/') }}">
                         {{ config('app.name', 'Laravel') }}
                     </a>
 

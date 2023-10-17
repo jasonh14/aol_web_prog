@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="">
-    <div class=" bg-gradient-to-r from-cyan-500 to-blue-500">
+    <div class=" bg-gradient-to-t from-cyan-400 to-cyan-100">
         <div class="w-full flex justify-center items-center h-[500px] text-2xl text-white font-bold">
             <div class="bg-red flex-1 flex justify-center items-center ">
                 Ini Slogan Paling Oke Anjay
