@@ -16,68 +16,67 @@
     <!-- Scripts -->
     @viteReactRefresh
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    
 </head>
-<body>
+<body class="bg-gray-50 text-gray-900">
+
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
-
-                    </ul>
+        <nav class="bg-white p-6 shadow-md">
+            <div class="container mx-auto">
+                <div class="flex justify-between items-center">
+                    <a class="text-2xl font-bold text-blue-600" href="{{ url('/') }}">
+                        {{ config('app.name', 'Laravel') }}
+                    </a>
 
                     <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto">
+                    <div class="space-x-6">
                         <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                </li>
+                                <a class="text-gray-700 hover:text-blue-600" href="{{ route('login') }}">{{ __('Login') }}</a>
                             @endif
 
                             @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
+                                <a class="text-gray-700 hover:text-blue-600" href="{{ route('register') }}">{{ __('Register') }}</a>
                             @endif
                         @else
-                        {{-- dropdown --}}
-                            <li class="nav-item "> 
-                                {{-- <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
-                                </a> --}}
-                                
-                                {{-- dropdown-menu dropdown-menu-end --}}
-                                <div class="" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
+                        
+                            <a href="{{ route('logout') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-200"
+                                onclick="event.preventDefault();
+                                            document.getElementById('logout-form').submit();">
+                                {{ __('Logout') }}
+                            </a>
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
+                                @csrf
+                            </form>
+                            {{-- <div x-data="{ open: false }" @click.away="open = false">
+                                <button @click="open = !open" class="relative">
+                                    <span class="text-gray-700">{{ Auth::user()->name }}</span>
+                                    <svg class="w-5 h-5 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                        <path clip-rule="evenodd" fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"></path>
+                                    </svg>
+                                </button>
+                                <div x-show="open" class="absolute mt-2 w-48 bg-white border rounded-md shadow-md z-10">
+                                    
                                 </div>
-                            </li>
+                            </div> --}}
                         @endguest
-                    </ul>
+                    </div>
                 </div>
             </div>
         </nav>
 
-        <main class="py-4">
+        <main class="">
             @yield('content')
         </main>
     </div>
+
+    <!-- Include Tailwind CSS here -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.0.7/dist/tailwind.min.css" rel="stylesheet">
+
+    <!-- Include AlpineJS for interactivity -->
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v3.x.x/dist/alpine.min.js" defer></script>
 </body>
 </html>

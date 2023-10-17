@@ -1,8 +1,18 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
+<div class="">
+    <div class=" bg-gradient-to-r from-cyan-500 to-blue-500">
+        <div class="w-full flex justify-center items-center h-[500px] text-2xl text-white font-bold">
+            <div class="bg-red flex-1 flex justify-center items-center ">
+                Ini Slogan Paling Oke Anjay
+            </div>
+            <div class="bg-blue flex-1 flex justify-center items-center ">
+                Ini Gambar
+            </div>
+        </div>
+    </div>
+    {{-- <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Dashboard') }}</div>
@@ -18,6 +28,6 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 </div>
 @endsection
