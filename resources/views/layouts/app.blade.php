@@ -13,12 +13,24 @@
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
+    <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('black') }}/img/apple-icon.png">
+    <link rel="icon" type="image/png" href="{{ asset('black') }}/img/favicon.png">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet" />
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <!-- Icons -->
+    <link href="{{ asset('black') }}/css/nucleo-icons.css" rel="stylesheet" />
+    <!-- CSS -->
+    <link href="{{ asset('black') }}/css/black-dashboard.css?v=1.0.0" rel="stylesheet" />
+    <link href="{{ asset('black') }}/css/theme.css" rel="stylesheet" />
     <!-- Scripts -->
     @viteReactRefresh
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    
+
 </head>
+
+
 <body class="bg-gray-50 text-gray-900">
 
     <div id="app">
@@ -41,7 +53,7 @@
                                 <a class="text-gray-700 hover:text-blue-600" href="{{ route('register') }}">{{ __('Register') }}</a>
                             @endif
                         @else
-                        
+
                             <a href="{{ route('logout') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-200"
                                 onclick="event.preventDefault();
                                             document.getElementById('logout-form').submit();">
@@ -59,7 +71,7 @@
                                     </svg>
                                 </button>
                                 <div x-show="open" class="absolute mt-2 w-48 bg-white border rounded-md shadow-md z-10">
-                                    
+
                                 </div>
                             </div> --}}
                         @endguest
@@ -75,8 +87,10 @@
 
     <!-- Include Tailwind CSS here -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.0.7/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.x.x/dist/alpine.min.js" defer></script>
 
     <!-- Include AlpineJS for interactivity -->
+
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v3.x.x/dist/alpine.min.js" defer></script>
 </body>
 </html>
