@@ -2,12 +2,12 @@
 
 @section('content')
 <div class="">
-    <div class="hero min-h-screen" style="background-image: url(https://daisyui.com/images/stock/photo-1507358522600-9f71e620c44e.jpg);">
+    <div class="hero min-h-screen" style="background-image: url({{asset("images/bg.jpg")}});">
         <div class="hero-overlay bg-opacity-60"></div>
         <div class="hero-content text-center text-neutral-content">
           <div class="max-w-md">
-            <h1 class="mb-5 text-5xl font-bold text-white">Hello there</h1>
-            <p class="mb-5 text-white">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
+            <h1 class="mb-5 text-5xl font-bold text-white">Chaturate: Publish. Explore. Connect.</h1>
+            <p class="mb-5 text-white">Explore, Create, Connect. Welcome to Chatbot Hub – where conversations come alive. Publish your chatbots, explore others, and be part of the AI dialogue revolution!</p>
             <button class="bg-gradient-to-r px-4 py-2 text-white rounded-xl from-cyan-600 to-cyan-500">Get Started</button>
           </div>
         </div>
@@ -209,7 +209,7 @@
 
         <!-- Page footer -->
         <footer class="absolute left-6 right-6 md:left-12 md:right-auto bottom-4 md:bottom-8 text-center md:text-left">
-            <a class="text-xs text-slate-500 hover:underline" href="https://cruip.com">&copy;Cruip - Tailwind CSS templates</a>
+            <a class="text-xs text-slate-500 hover:underline" href="https://cruip.com">&copy;Chaturate</a>
         </footer>
 
         <!-- Banner with links -->
