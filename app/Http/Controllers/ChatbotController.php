@@ -15,6 +15,7 @@ class ChatbotController extends Controller
 
     public function processUpload(Request $request)
     {
+        // dd($request->all())
 
         // $validateData = $request->validate([
         //     'chatbot_name' => 'required',
@@ -23,7 +24,7 @@ class ChatbotController extends Controller
         //     'req_url' => 'required',
         //     'chatbot_description' => 'required',
         // ]);
-        $imagePath = $request->file('image')->store('public/images'); // Store the image in storage
+        $imagePath = $request->image->store('public'); // Store the image in storage
         $imageUrl = Storage::url($imagePath); // Get the URL of the stored image
 
         $chatbot = new Chatbot();

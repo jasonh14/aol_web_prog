@@ -8,7 +8,7 @@
     </div>
     <div class="mb-3">
         <label for="image_url" class="form-label">Image</label>
-        <input class="form-control" type="file" id="formFile">
+        <input class="form-control" type="file" id="formFile" name="image">
       </div>
     <div class="form-floating mb-3">
         <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
