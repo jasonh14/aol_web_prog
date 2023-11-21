@@ -7,7 +7,7 @@
         <div class="hero-content text-center text-neutral-content">
           <div class="max-w-md">
             <h1 class="mb-5 text-5xl font-bold text-white">Chaturate: Publish. Explore. Connect.</h1>
-            <p class="mb-5 text-white">Explore, Create, Connect. Welcome to Chaturate – where conversations come alive. Publish your chatbots, explore others, and be part of the AI dialogue revolution!</p>
+            <p class="mb-5 text-white">Engage, Explore, Experience. Welcome to Chaturate – where conversations come alive. Publish your chatbots, explore others, and be part of the AI dialogue revolution!</p>
             <a href="{{route("register")}}">
                 <button class="bg-gradient-to-r px-4 py-2 text-white rounded-xl from-cyan-600 to-cyan-500">Get Started</button>
             </a>

@@ -18,6 +18,8 @@ return new class extends Migration
             $table->integer('user_id')->nullable()->index('user_id');
             $table->string('chatbot_name');
             $table->string('chatbot_webhook_url');
+            $table->string('image_url');
+            $table->string('req_url');
             $table->text('chatbot_description')->nullable();
             $table->timestamp('createdAt')->useCurrent();
             $table->timestamp('deletedAt')->nullable();

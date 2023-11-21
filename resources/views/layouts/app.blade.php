@@ -47,18 +47,22 @@
                         @guest
                             @if (Route::has('login'))
                                 <a class="text-gray-700 hover:text-blue-600" href="{{ route('login') }}">{{ __('Login') }}</a>
+
+
                             @endif
 
                             @if (Route::has('register'))
                                 <a class="text-gray-700 hover:text-blue-600" href="{{ route('register') }}">{{ __('Register') }}</a>
                             @endif
                         @else
-
-                            <a href="{{ route('logout') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-200"
-                                onclick="event.preventDefault();
-                                            document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
-                            </a>
+                            <div class="flex items-center ">
+                                <a class="text-gray-700 hover:bg-gray-200" href="{{ route('upload') }}">{{ __('Upload') }}</a>
+                                <a href="{{ route('logout') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-200"
+                                    onclick="event.preventDefault();
+                                                document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
+                                </a>
+                            </div>
 
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
                                 @csrf
