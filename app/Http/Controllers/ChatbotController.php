@@ -14,6 +14,12 @@ class ChatbotController extends Controller
         return view('upload');
     }
 
+    public function index(){
+        $chatbots = Chatbot::all();
+
+        return view("explore", ['chatbots' => $chatbots]);
+    }
+
     public function processUpload(Request $request)
     {
         // dd($request->all())
@@ -46,5 +52,10 @@ class ChatbotController extends Controller
         $chatbot->save();
 
         return redirect()->route('dashboard');
+    }
+
+    public function chat(string $id)
+    {
+        return view('chat');
     }
 }

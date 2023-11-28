@@ -23,6 +23,7 @@
     <!-- CSS -->
     <link href="{{ asset('black') }}/css/black-dashboard.css?v=1.0.0" rel="stylesheet" />
     <link href="{{ asset('black') }}/css/theme.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <!-- Scripts -->
     @viteReactRefresh
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
@@ -55,8 +56,9 @@
                                 <a class="text-gray-700 hover:text-blue-600" href="{{ route('register') }}">{{ __('Register') }}</a>
                             @endif
                         @else
-                            <div class="flex items-center ">
-                                <a class="text-gray-700 hover:bg-gray-200" href="{{ route('upload') }}">{{ __('Upload') }}</a>
+                            <div class="flex items-center">
+                                <a class="text-gray-700 hover:bg-gray-200 px-4 " href="{{ route('explore') }}">{{ __('Explore') }}</a>
+                                <a class="text-gray-700 hover:bg-gray-200 px-4 " href="{{ route('upload') }}">{{ __('Upload') }}</a>
                                 <a href="{{ route('logout') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-200"
                                     onclick="event.preventDefault();
                                                 document.getElementById('logout-form').submit();">
