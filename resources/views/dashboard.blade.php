@@ -8,7 +8,7 @@
                 </div>
               </div>
             <div class="flex flex-col gap-2">
-                <h1 class="font-semibold text-2xl">Welcome Back Adi!</h1>
+                <h1 class="font-semibold text-2xl">Welcome Back {{$user->display_name}}!</h1>
                 <div class="flex gap-2">
 
                     <button class="btn btn-primary bg-cyan-400 hover:bg-cyan-500 border border-cyan-400">Edit Profile</button>

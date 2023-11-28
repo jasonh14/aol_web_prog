@@ -18,9 +18,7 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->name("dashboard");
+Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name("dashboard");
 
 Auth::routes();
 
