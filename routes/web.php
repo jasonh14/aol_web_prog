@@ -29,4 +29,6 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 Route::get('/chat/{id}', [ChatbotController::class, 'chat'])->name("chat");
 Route::get('/explore', [App\Http\Controllers\ChatbotController::class, 'index'])->name('explore');
 Route::get('/upload', [App\Http\Controllers\ChatbotController::class, 'upload'])->name('upload');
+Route::get('/profile', [App\Http\Controllers\UserController::class, 'index'])->name('edit');
 Route::post('/processUpload', [App\Http\Controllers\ChatbotController::class, 'processUpload'])->name('processUpload');
+Route::post('/processEditProfile', [App\Http\Controllers\UserController::class, 'processUpload'])->name('store.profile');

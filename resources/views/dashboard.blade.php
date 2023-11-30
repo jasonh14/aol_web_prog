@@ -3,17 +3,27 @@
     <div>
         <div class="flex justify-center items-center p-4 gap-4">
             <div class="avatar online">
-                <div class="w-24 rounded-full">
-                    <img src="https://source.unsplash.com/user/wsanter" />
+                <div class="rounded-full overflow-hidden h-32 w-32">
+
+                    @if ($user->image_url)
+                        <img src="{{ $user->image_url }}" />
+                    @else
+                        <img src="{{ asset('images/guest.png') }}" />
+                    @endif
                 </div>
             </div>
             <div class="flex flex-col gap-2">
                 <h1 class="font-semibold text-2xl">Welcome Back {{ $user->display_name }}!</h1>
                 <div class="flex gap-2">
-
-                    <button class="btn btn-primary bg-cyan-400 hover:bg-cyan-500 border border-cyan-400">Edit
-                        Profile</button>
-                    <button class="btn btn-primary bg-cyan-400 hover:bg-cyan-500 border border-cyan-400">Sign Out</button>
+                    <a href="{{ route('edit') }}">
+                        <button class="btn btn-primary bg-cyan-400 hover:bg-cyan-500 border border-cyan-400">Edit
+                            Profile</button>
+                    </a>
+                    <a href="{{ route('logout') }}"
+                        onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();">
+                        <button class="btn btn-primary bg-cyan-400 hover:bg-cyan-500 border border-cyan-400">Logout</button>
+                    </a>
                 </div>
 
             </div>

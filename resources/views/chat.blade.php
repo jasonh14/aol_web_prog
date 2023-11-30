@@ -72,8 +72,11 @@
                             <div class="flex items-center gap-3">
                                 <div class="avatar">
                                     <div class="mask mask-squircle w-12 h-12">
-                                        <img src="https://source.unsplash.com/user/wsanter"
-                                            alt="Avatar Tailwind CSS Component" />
+                                        @if ($comment->user->image_url)
+                                            <img src="{{ $comment->user->image_url }}" />
+                                        @else
+                                            <img src="{{ asset('images/guest.png') }}" />
+                                        @endif
                                     </div>
                                 </div>
                                 <div>
