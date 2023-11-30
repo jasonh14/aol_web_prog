@@ -77,7 +77,13 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <div class="font-bold">{{ $comment->user->display_name }}</div>
+                                    @if ($comment->user)
+                                        <!-- Check if the 'user' relationship exists -->
+                                        <div class="font-bold">{{ $comment->user->display_name }}</div>
+                                    @else
+                                        <div class="font-bold">Unknown User</div>
+                                    @endif
+
                                     <p>{{ $comment->content }}</p>
 
                                 </div>
