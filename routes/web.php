@@ -15,15 +15,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
+
 
 Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name("dashboard");
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/chat/{id}', [ChatbotController::class, 'chat'])->name("chat");
 Route::get('/explore', [App\Http\Controllers\ChatbotController::class, 'index'])->name('explore');
 Route::get('/upload', [App\Http\Controllers\ChatbotController::class, 'upload'])->name('upload');
