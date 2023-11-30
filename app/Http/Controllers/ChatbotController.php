@@ -58,7 +58,7 @@ class ChatbotController extends Controller
 
     public function chat(string $id)
     {
-        $comments = Comment::where('chatbot_id', $id)->get();
+        $comments = Comment::where('chatbot_id', $id)->with('user')->get();
         return view('chat', ["chatbot_id" => $id, "comments" => $comments]);
     }
 }
