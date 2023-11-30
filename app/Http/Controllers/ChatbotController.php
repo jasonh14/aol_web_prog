@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Chatbot;
+use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
@@ -14,7 +15,8 @@ class ChatbotController extends Controller
         return view('upload');
     }
 
-    public function index(){
+    public function index()
+    {
         $chatbots = Chatbot::all();
 
         return view("explore", ['chatbots' => $chatbots]);
@@ -56,6 +58,7 @@ class ChatbotController extends Controller
 
     public function chat(string $id)
     {
-        return view('chat');
+        $comments = Comment::where('chatbot_id', $id)->get();
+        return view('chat', ["chatbot_id" => $id, "comments" => $comments]);
     }
 }

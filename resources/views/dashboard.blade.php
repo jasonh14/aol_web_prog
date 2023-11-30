@@ -44,8 +44,7 @@
                                 <div class="flex items-center gap-3">
                                     <div class="avatar">
                                         <div class="mask mask-squircle w-12 h-12">
-                                            <img src="https://source.unsplash.com/user/wsanter"
-                                                alt="Avatar Tailwind CSS Component" />
+                                            <img src="{{ $chatbot->image_url }}" alt="Avatar Tailwind CSS Component" />
                                         </div>
                                     </div>
                                     <div>

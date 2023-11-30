@@ -50,8 +50,44 @@
             </div>
         </div>
         <div class="divider divider-horizontal"></div>
-        <div class="w-1/3">
+        <div class="w-1/3 h-[70vh] overflow-y-auto">
             <div>test</div>
+            <div class="divider divider-vertical"></div>
+            <div>
+                <p class="text-lg font-semibold">Comments</p>
+                <form action="{{ route('comments.store') }}" method="POST">
+                    @csrf
+                    <div class="mb-4 flex gap-2">
+                        <textarea id="comment" name="comment" rows="1"style="resize: none;"
+                            class="shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
+                        <button type="submit"
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Add</button>
+                    </div>
+                    <input type="hidden" name="chatbot_id" value="{{ $chatbot_id }}">
+                </form>
+                <div class="flex flex-col">
+
+                    @foreach ($comments as $comment)
+                        <div>
+                            <div class="flex items-center gap-3">
+                                <div class="avatar">
+                                    <div class="mask mask-squircle w-12 h-12">
+                                        <img src="https://source.unsplash.com/user/wsanter"
+                                            alt="Avatar Tailwind CSS Component" />
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="font-bold">{{ $comment->user->display_name }}</div>
+                                    <p>{{ $comment->content }}</p>
+
+                                </div>
+                            </div>
+                            <div class="divider divider-vertical"></div>
+                        </div>
+                    @endforeach
+                </div>
+
+            </div>
         </div>
     </div>
 @endsection
