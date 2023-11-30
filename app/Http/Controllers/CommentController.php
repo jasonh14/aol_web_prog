@@ -18,7 +18,7 @@ class CommentController extends Controller
         $comment->content = $validatedData['comment'];
         // Assuming you have a user_id associated with the comment
         $user = Auth::user();
-        $user_id = $user->user_id;
+        $user_id = $user->id;
         $comment->user_id = $user_id;
         $comment->chatbot_id = $request->chatbot_id;
         $comment->save();

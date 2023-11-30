@@ -46,7 +46,7 @@ class ChatbotController extends Controller
         // $chatbot->req_url = $validateData['req_url'];
         // $chatbot->chatbot_description = $validateData['chatbot_description'];
         $chatbot->chatbot_name = $request->chatbot_name;
-        $chatbot->user_id = $user->user_id;
+        $chatbot->user_id = $user->id;
         $chatbot->chatbot_webhook_url = $request->chatbot_webhook_url;
         $chatbot->image_url = $imageUrl; // Save the image URL to the database
         $chatbot->req_url = $request->req_url;

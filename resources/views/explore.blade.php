@@ -10,7 +10,7 @@
                         <h2 class="card-title">{{ $chatbot->chatbot_name }}</h2>
                         <p>{{ $chatbot->chatbot_description }}</p>
                         <div class="card-actions justify-end">
-                            <a href="{{ route('chat', $chatbot->chatbot_id) }}">
+                            <a href="{{ route('chat', $chatbot->id) }}">
                                 <button class="btn btn-primary">Test</button>
                             </a>
                         </div>

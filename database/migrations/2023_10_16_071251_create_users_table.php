@@ -14,8 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->integer('user_id', true);
+            $table->id();
             $table->string('display_name');
+            $table->string("image_url");
             $table->string('email')->unique('email');
             $table->string('password');
             $table->timestamp('createdAt')->useCurrent();

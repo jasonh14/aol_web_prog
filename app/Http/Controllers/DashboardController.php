@@ -14,7 +14,7 @@ class DashboardController extends Controller
         if (Auth::check()) {
             // User is logged in
             $user = Auth::user();
-            $user_id = $user->user_id;
+            $user_id = $user->id;
             $chatbots = Chatbot::where('user_id', $user_id)->get();
             return view('dashboard', ['user' => $user, 'chatbots' => $chatbots]);
             // Do something with the $user object

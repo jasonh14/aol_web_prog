@@ -14,8 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('chatbots', function (Blueprint $table) {
-            $table->integer('chatbot_id', true);
-            $table->integer('user_id')->nullable()->index('user_id');
+            $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+
             $table->string('chatbot_name');
             $table->string('chatbot_webhook_url');
             $table->string('image_url');

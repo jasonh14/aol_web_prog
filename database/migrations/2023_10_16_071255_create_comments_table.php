@@ -14,9 +14,14 @@ return new class extends Migration
     public function up()
     {
         Schema::create('comments', function (Blueprint $table) {
-            $table->integer('comment_id', true);
-            $table->integer('user_id')->nullable()->index('user_id');
-            $table->integer('chatbot_id')->nullable()->index('chatbot_id');
+            $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+
+            $table->unsignedBigInteger('chatbot_id');
+            $table->foreign('chatbot_id')->references('id')->on('chatbots');
+
+
             $table->integer('replied_comment_id')->nullable()->index('replied_comment_id');
             $table->text('content');
             $table->timestamp('createdAt')->useCurrent();

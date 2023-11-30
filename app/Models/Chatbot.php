@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Chatbot
- * 
+ *
  * @property int $chatbot_id
  * @property int|null $user_id
  * @property string $chatbot_name
@@ -21,7 +21,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon $createdAt
  * @property Carbon|null $deletedAt
  * @property Carbon|null $updatedAt
- * 
+ *
  * @property User|null $user
  * @property Collection|Comment[] $comments
  * @property Collection|Vote[] $votes
@@ -30,39 +30,39 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Chatbot extends Model
 {
-	protected $table = 'chatbots';
-	protected $primaryKey = 'chatbot_id';
-	public $timestamps = false;
+    protected $table = 'chatbots';
+    protected $primaryKey = 'id';
+    public $timestamps = false;
 
-	protected $casts = [
-		'user_id' => 'int',
-		'createdAt' => 'datetime',
-		'deletedAt' => 'datetime',
-		'updatedAt' => 'datetime'
-	];
+    protected $casts = [
+        'user_id' => 'int',
+        'createdAt' => 'datetime',
+        'deletedAt' => 'datetime',
+        'updatedAt' => 'datetime'
+    ];
 
-	protected $fillable = [
-		'user_id',
-		'chatbot_name',
-		'chatbot_webhook_url',
-		'chatbot_description',
-		'createdAt',
-		'deletedAt',
-		'updatedAt'
-	];
+    protected $fillable = [
+        'user_id',
+        'chatbot_name',
+        'chatbot_webhook_url',
+        'chatbot_description',
+        'createdAt',
+        'deletedAt',
+        'updatedAt'
+    ];
 
-	public function user()
-	{
-		return $this->belongsTo(User::class);
-	}
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
-	public function comments()
-	{
-		return $this->hasMany(Comment::class);
-	}
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 
-	public function votes()
-	{
-		return $this->hasMany(Vote::class);
-	}
+    public function votes()
+    {
+        return $this->hasMany(Vote::class);
+    }
 }
