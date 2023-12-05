@@ -20,6 +20,7 @@ return new class extends Migration
 
             $table->unsignedBigInteger('chatbot_id');
             $table->foreign('chatbot_id')->references('id')->on('chatbots');
+
             $table->enum('vote_type', ['Upvote', 'Downvote']);
             $table->timestamp('createdAt')->useCurrent();
             $table->timestamp('deletedAt')->nullable();

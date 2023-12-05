@@ -21,7 +21,6 @@ return new class extends Migration
             $table->unsignedBigInteger('chatbot_id');
             $table->foreign('chatbot_id')->references('id')->on('chatbots');
 
-
             $table->integer('replied_comment_id')->nullable()->index('replied_comment_id');
             $table->text('content');
             $table->timestamp('createdAt')->useCurrent();
