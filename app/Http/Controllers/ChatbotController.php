@@ -7,6 +7,11 @@ use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use App\Models\ChatSession;
+use App\Models\ChatMessage;
+use App\Models\ReplyToken;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Http;
 
 class ChatbotController extends Controller
 {
@@ -59,6 +64,105 @@ class ChatbotController extends Controller
     public function chat(string $id)
     {
         $comments = Comment::where('chatbot_id', $id)->with('user')->get();
-        return view('chat', ["chatbot_id" => $id, "comments" => $comments]);
+        $user = Auth::user();
+        $session = ChatSession::firstOrCreate([
+            'chatbot_id' => $id,
+            'user_id' => $user->id
+        ]);
+
+        $chatbot = Chatbot::find($id);
+
+        $messages = ChatMessage::where('session_id', $session->id)->get();
+
+        return view('chat', [
+            "chatbot_id" => $id,
+            "chatbot" => $chatbot,
+            "session" => $session,
+            "messages" => $messages,
+            "comments" => $comments
+        ]);
     }
+
+
+    public function sendClientMessage(Request $request, $id)
+    {
+        $user = Auth::user();
+        $chatbot = Chatbot::findOrFail($id);
+
+        $replyToken = Str::random(40);
+
+        $payload = [
+            'client_display_name' => $user->name,
+            'client_id' => $user->id,
+            'message' => $request->message,
+            'timestamp' => now(),
+            'replyToken' => $replyToken,
+        ];
+
+        Http::post($chatbot->chatbot_webhook_url, $payload);
+
+        $session = ChatSession::firstOrCreate([
+            'chatbot_id' => $id,
+            'user_id' => $user->id,
+        ]);
+
+        $message = ChatMessage::create([
+            'session_id' => $session->id,
+            'sender' => 1, // 1 for user
+            'message' => $request->message,
+        ]);
+
+        ReplyToken::create([
+            'session_id' => $session->id,
+            'message_id' => $message->id,
+            'token' => $replyToken,
+            'usage_left' => 5,
+        ]);
+
+        return redirect()->back();
+    }
+
+    public function clearChat(Request $request, $id)
+    {
+        $session = ChatSession::find($id);
+
+        if (!$session) {
+            return response()->json(['message' => 'Chat session not found'], 404);
+        }
+
+        ChatMessage::where('session_id', $id)->delete();
+
+        return redirect()->back()->with('success', 'Chat history cleared.');
+    }
+
+    public function onMessageReceived(Request $request)
+    {
+        $replyToken = $request->header('ReplyToken');
+
+        $tokenRecord = ReplyToken::where('token', $replyToken)->first();
+
+        if ($tokenRecord && $tokenRecord->usage_left > 0) {
+            $tokenRecord->decrement('usage_left');
+
+            if ($request->has('message')) {
+                $message = new ChatMessage();
+                $message->session_id = $tokenRecord->session_id;
+                $message->sender = 0; // 0 for bot
+                $message->message = $request->message;
+                $message->save();
+            }
+        }
+    }
+
+    public function checkNewMessages($id)
+    {
+        $lastMessageId = request()->query('lastMessageId', 0);
+        $newMessages = ChatMessage::where('session_id', $id)
+                        ->where('id', '>', $lastMessageId)
+                        ->exists();
+
+        return response()->json(['newMessages' => $newMessages]);
+    }
+
+
 }

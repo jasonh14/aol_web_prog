@@ -46,6 +46,7 @@ class Chatbot extends Model
         'chatbot_name',
         'chatbot_webhook_url',
         'chatbot_description',
+        'image_url',
         'createdAt',
         'deletedAt',
         'updatedAt'
