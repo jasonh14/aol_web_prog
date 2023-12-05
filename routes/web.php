@@ -34,3 +34,6 @@ Route::post('/processUpload', [App\Http\Controllers\ChatbotController::class, 'p
 Route::post('/processEditProfile', [App\Http\Controllers\UserController::class, 'processUpload'])->name('store.profile');
 Route::post('/chat/{id}/send', [App\Http\Controllers\ChatbotController::class, 'sendClientMessage'])->name('sendClientMessage');
 Route::post('/chat/respondendp', [App\Http\Controllers\ChatbotController::class, 'onMessageReceived'])->name('onMessageReceived');
+Route::post('/chat/{id}/clear', [App\Http\Controllers\ChatbotController::class, 'clearChat'])->name('clearChat');
+Route::get('/chat/{id}/check-new-messages', [ChatbotController::class, 'checkNewMessages']);
+

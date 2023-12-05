@@ -1,57 +1,62 @@
 @extends('layouts.app')
+
 @section('content')
     <div class="p-8 flex min-h-screen">
+        <div class="relative w-2/3">
+            <div class="w-full text-center mb-6">
+                <h1 class="text-3xl font-bold">{{ $chatbot->chatbot_name }}</h1>
+                <p class="text-lg text-gray-600">{{ $chatbot->chatbot_description }}</p>
+            </div>
+            <div class="relative max-h-[70vh] overflow-y-auto" style="background-color: rgba(0, 0, 0, 0.1); border-radius: 8px; min-height: 55vh;">
+                @forelse ($messages as $message)
+                    <div class="chat {{ $message->sender == 1 ? 'chat-end' : 'chat-start' }} ml-4 mr-4 mt-2">
+                        <div class="chat-image avatar">
+                            <div class="w-10 rounded-full">
+                                <img alt="Avatar" src="{{ $message->sender == 1 ? (Auth::user()->image_url ? Auth::user()->image_url : asset('images/guest.png')) : ($chatbot->image_url ? $chatbot->image_url : asset('images/guest.png')) }}" />
+                            </div>
+                        </div>
+                        <div class="chat-header">
+                            {{ $message->sender == 1 ? 'You' : $chatbot->chatbot_name }}
+                        </div>
+                        <div class="chat-bubble">{{ $message->message }}</div>
+                        <div class="chat-footer opacity-50">
+                            {{ $message->created_at->setTimezone('Asia/Bangkok')->format('H:i') }}
+                        </div>
+                    </div>
+                @empty
+                    <div class="text-center text-gray-600 py-10">
+                        You have not started a chat yet. Send a message and see how the bot responds!
+                    </div>
+                @endforelse
+            </div>
 
-        <div class="relative w-2/3 max-h-[70vh] overflow-y-auto">
-            @for ($i = 0; $i < 100; $i++)
-                <div class="chat chat-start">
-                    <div class="chat-image avatar">
-                        <div class="w-10 rounded-full">
-                            <img alt="Tailwind CSS chat bubble component"
-                                src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
-                        </div>
+            <div class="sticky flex gap-2 bg-black rounded-md m-4 bottom-0 text-white p-4">
+                <form action="{{ url('/chat/' . $session->id . '/clear') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="btn btn-outline btn-danger">Clear Chat</button>
+                </form>
+                <form action="{{ url('/chat/' . $session->id . '/send') }}" method="POST" class="flex-grow">
+                    @csrf
+                    <div class="flex gap-2">
+                        {{-- Message Input --}}
+                        <input id="messageInput" name="message" class="pl-4 w-full rounded-md" type="text" style="color: black;" oninput="toggleButton()">
+
+                        {{-- Send Button --}}
+                        <button id="sendButton" class="btn btn-active btn-primary" type="submit">
+                            <span class="material-symbols-outlined">
+                                send
+                            </span>
+                            <span>
+                                Send
+                            </span>
+                        </button>
                     </div>
-                    <div class="chat-header">
-                        Obi-Wan Kenobi
-                        <time class="text-xs opacity-50">12:45</time>
-                    </div>
-                    <div class="chat-bubble">You were the Chosen One!</div>
-                    <div class="chat-footer opacity-50">
-                        Delivered
-                    </div>
-                </div>
-                <div class="chat chat-end">
-                    <div class="chat-image avatar">
-                        <div class="w-10 rounded-full">
-                            <img alt="Tailwind CSS chat bubble component"
-                                src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
-                        </div>
-                    </div>
-                    <div class="chat-header">
-                        Anakinp
-                        <time class="text-xs opacity-50">12:46</time>
-                    </div>
-                    <div class="chat-bubble">I hate you!</div>
-                    <div class="chat-footer opacity-50">
-                        Seen at 12:46
-                    </div>
-                </div>
-            @endfor
-            <div class="sticky flex gap-2 bg-black rounded-md m-4 bottom-0 text-white  p-4">
-                <input class="pl-4 w-5/6 rounded-md" type="text">
-                <button class="btn btn-active w-1/6 btn-primary ">
-                    <span class="material-symbols-outlined">
-                        send
-                    </span>
-                    <span>
-                        send
-                    </span>
-                </button>
+                </form>
             </div>
         </div>
+
         <div class="divider divider-horizontal"></div>
         <div class="w-1/3 h-[70vh] overflow-y-auto">
-            <div>test</div>
             <div class="divider divider-vertical"></div>
             <div>
                 <p class="text-lg font-semibold">Comments</p>
@@ -99,4 +104,72 @@
             </div>
         </div>
     </div>
+
+    <script>
+        var pollingInterval;
+
+        function sendMessage() {
+            var message = document.getElementById('messageInput').value.trim();
+            var chatId = '{{ $session->id }}';
+
+            if (message) {
+                document.getElementById('messageInput').value = '';
+                toggleButton();
+                startPolling();
+            }
+        }
+
+        function startPolling() {
+            if (pollingInterval) {
+                clearInterval(pollingInterval);
+            }
+            pollingInterval = setInterval(checkForNewMessages, 200);
+        }
+
+        function checkForNewMessages() {
+            var chatId = '{{ $session->id }}';
+            var lastMessageId = getLastMessageId();
+
+            fetch('/chat/' + chatId + '/check-new-messages?lastMessageId=' + lastMessageId, {
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+            }).then(response => response.json())
+              .then(data => {
+                    if (data.newMessages) {
+                        clearInterval(pollingInterval);
+                        location.reload();
+                    }
+                });
+        }
+
+        function getLastMessageId() {
+            var lastMessage = document.querySelector('.chat:last-child');
+            return lastMessage ? lastMessage.dataset.messageId : 0;
+        }
+
+        function scrollToBottom() {
+            const chatContainer = document.querySelector('.relative.overflow-y-auto');
+            if (chatContainer) {
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }
+        }
+
+        function toggleButton() {
+            var input = document.getElementById('messageInput');
+            var button = document.getElementById('sendButton');
+            if (input.value.trim()) {
+                button.disabled = false;
+            } else {
+                button.disabled = true;
+            }
+        }
+
+        window.onload = function() {
+            toggleButton();
+            scrollToBottom();
+        };
+    </script>
 @endsection

@@ -17,12 +17,12 @@
     <div class="mb-3">
         <label for="chatbot_webhook_url" class="form-label">Webhook URL</label>
         <input name="chatbot_webhook_url" type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input placeholder">
-        <p class="text-red-400">*this is the url where we listen to your bot responses</p>
+        <p class="text-red-400">*this is the url where we send messages to your bot</p>
     </div>
     <div class="mb-3">
-        <label for="req_url" class="form-label">Req URL</label>
+        <label for="req_url" class="form-label">Origin URL</label>
         <input name="req_url" type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input placeholder">
-        <p class="text-red-400">*this is the url where we sent request to your bot </p>
+        <p class="text-red-400">*this is the url where your bot requests originate from</p>
     </div>
     <button type="submit" class="btn btn-neutral">Submit</button>
 
