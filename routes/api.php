@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ChatbotController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,3 +20,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/chat/{id}/check-new-messages', [ChatbotController::class, 'checkNewMessages']);
+Route::post('/chatrespondendp', [App\Http\Controllers\ChatbotController::class, 'onMessageReceived'])->name('onMessageReceived');

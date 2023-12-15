@@ -32,7 +32,7 @@
 </head>
 
 
-<body class="bg-gray-50 text-gray-900">
+<body class="bg-white text-gray-900">
 
     <div id="app">
         <nav class="bg-white p-6 ">
@@ -59,6 +59,7 @@
                             <div class="flex items-center">
                                 <a class="text-gray-700 hover:bg-gray-200 px-4 " href="{{ route('explore') }}">{{ __('Explore') }}</a>
                                 <a class="text-gray-700 hover:bg-gray-200 px-4 " href="{{ route('upload') }}">{{ __('Upload') }}</a>
+                                <a class="text-gray-700 hover:bg-gray-200 px-4 " href="{{ route('dashboard') }}">{{ __('Dashboard') }}</a>
                                 <a href="{{ route('logout') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-200"
                                     onclick="event.preventDefault();
                                                 document.getElementById('logout-form').submit();">
@@ -86,7 +87,7 @@
             </div>
         </nav>
 
-        <main class="">
+        <main class="h-screen">
             @yield('content')
         </main>
     </div>

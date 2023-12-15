@@ -22,16 +22,16 @@
             @foreach ($chatbots as $chatbot)
                 <div class="cursor-pointer rounded-xl bg-white p-3 shadow-lg hover:shadow-xl">
                     <div class="relative flex items-end overflow-hidden rounded-xl">
-                        <img src="{{ $chatbot->image_url }}" alt="wallpaper" />
+                        <img src="{{ $chatbot->image_url }}" alt="wallpaper" class="h-[500px] w-full"/>
 
                         <div class="absolute bottom-3 left-3 inline-flex items-center rounded-lg bg-white p-2 shadow-md">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20"
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-400" viewBox="0 0 20 20"
                                 fill="currentColor">
                                 <path
                                     d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                             </svg>
 
-                            <span class="ml-1 text-sm text-slate-400">4.9</span>
+                            <span class="ml-1 text-sm text-slate-400">{{ number_format($avgRatings[$chatbot->id] ?? 0, 1) ?? 'No rating' }}</span>
                         </div>
                     </div>
 
@@ -41,9 +41,17 @@
 
                         <div class="mt-3 flex items-end justify-between">
                             <div class="card-actions w-full justify-end">
-                                <a href="{{ route('chat', 1) }}">
-                                    <button class="btn btn-primary">Test</button>
-                                </a>
+                                @auth
+                                    <a href="{{ route('chat', 1) }}">
+                                        <button class="btn btn-primary">Test Chatbot</button>
+                                    </a>
+                                @endauth
+
+                                @guest
+                                    <a href="{{ route('login') }}">
+                                        <button class="btn btn-primary">Login to Test</button>
+                                    </a>
+                                @endguest
                             </div>
                         </div>
                     </div>
@@ -89,15 +97,14 @@
                             </div>
                             <h2>
                                 <span
-                                    class="flex tabular-nums text-slate-900 text-5xl font-extrabold mb-2 transition-[_--num] duration-[3s] ease-out [counter-set:_num_var(--num)] supports-[counter-set]:before:content-[counter(num)]"
+                                    class="flex tabular-nums text-slate-900 text-5xl font-extrabold mb-2 transition-[_--num] duration-[3s] ease-out [counter-set:_num_var(--num)]"
                                     x-data="{ shown: false }" x-intersect="shown = true" :class="shown && '[--num:40]'">
-                                    <span class="supports-[counter-set]:sr-only">40</span>K+
+                                    <span class="">{{$usersCount}}</span>+
                                 </span>
                                 <span
-                                    class="inline-flex font-semibold bg-clip-text text-transparent bg-gradient-to-r from-cyan-600 to-cyan-300 mb-2">Variations</span>
+                                    class="inline-flex font-semibold bg-clip-text text-transparent bg-gradient-to-r from-cyan-600 to-cyan-300 mb-2">Active Users</span>
                             </h2>
-                            <p class="text-sm text-slate-500">Many desktop publishing packages and web page editors now use
-                                Pinky as their default model text.</p>
+                            <p class="text-sm text-slate-500">Our users are actively testing and reviewing each chatbot to make sure they have quality responses.</p>
                         </article>
                         <!-- Block #2 -->
                         <article>
@@ -128,13 +135,12 @@
                                 <span
                                     class="flex tabular-nums text-slate-900 text-5xl font-extrabold mb-2 transition-[_--num] duration-[3s] ease-out [counter-set:_num_var(--num)] "
                                     x-data="{ shown: false }" x-intersect="shown = true" :class="shown && '[--num:70]'">
-                                    <span class="">70</span>K+
+                                    <span class="">{{$messagesCount}}</span>+
                                 </span>
                                 <span
-                                    class="inline-flex font-semibold bg-clip-text text-transparent bg-gradient-to-r from-cyan-600 to-cyan-300 mb-2">Lessons</span>
+                                    class="inline-flex font-semibold bg-clip-text text-transparent bg-gradient-to-r from-cyan-600 to-cyan-300 mb-2">Messages Sent</span>
                             </h2>
-                            <p class="text-sm text-slate-500">Many desktop publishing packages and web page editors now use
-                                Pinky as their default model text.</p>
+                            <p class="text-sm text-slate-500">Messages are sent from our users to test the chatbots as well from the chatbots to respond the users.</p>
                         </article>
                         <!-- Block #3 -->
                         <article>
@@ -160,15 +166,14 @@
                             </div>
                             <h2>
                                 <span
-                                    class="flex tabular-nums text-slate-900 text-5xl font-extrabold mb-2 transition-[_--num] duration-[3s] ease-out [counter-set:_num_var(--num)] supports-[counter-set]:before:content-[counter(num)]"
+                                    class="flex tabular-nums text-slate-900 text-5xl font-extrabold mb-2 transition-[_--num] duration-[3s] ease-out [counter-set:_num_var(--num)]"
                                     x-data="{ shown: false }" x-intersect="shown = true" :class="shown && '[--num:149]'">
-                                    <span class="supports-[counter-set]:sr-only">149</span>+
+                                    <span class="">{{$chatbotsCount}}</span>+
                                 </span>
                                 <span
-                                    class="inline-flex font-semibold bg-clip-text text-transparent bg-gradient-to-r from-cyan-600 to-cyan-300 mb-2">Workshops</span>
+                                    class="inline-flex font-semibold bg-clip-text text-transparent bg-gradient-to-r from-cyan-600 to-cyan-300 mb-2">Registered Chatbots</span>
                             </h2>
-                            <p class="text-sm text-slate-500">Many desktop publishing packages and web page editors now use
-                                Pinky as their default model text.</p>
+                            <p class="text-sm text-slate-500">Chatbots with different kind of technologies and utilities.</p>
                         </article>
                     </section>
                     <!-- End: Animated Number Counter -->

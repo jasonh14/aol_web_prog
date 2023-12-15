@@ -84,7 +84,7 @@
             </table>
         </div>
         <div class="divider lg:divider-horizontal"></div>
-        <div class="overflow-x-auto">
+        <div class="overflow-x-auto overflow-y-scroll h-96">
             <table class="table">
                 <!-- head -->
                 <thead>
