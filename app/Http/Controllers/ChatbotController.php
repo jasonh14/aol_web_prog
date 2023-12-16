@@ -158,11 +158,9 @@ class ChatbotController extends Controller
     {
         $lastMessageId = request()->query('lastMessageId', 0);
         $newMessages = ChatMessage::where('session_id', $id)
-                        ->where('id', '>', $lastMessageId)
-                        ->exists();
+            ->where('id', '>', $lastMessageId)
+            ->exists();
 
         return response()->json(['newMessages' => $newMessages]);
     }
-
-
 }
