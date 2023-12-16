@@ -11,7 +11,8 @@ class CommentController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'comment' => 'required|max:255', // Adjust the validation rules as needed
+            'comment' => 'required|max:255',
+            'rating' => 'required|max:5|min:0.5'
         ]);
 
         $comment = new Comment();
@@ -20,6 +21,7 @@ class CommentController extends Controller
         $user = Auth::user();
         $user_id = $user->id;
         $comment->user_id = $user_id;
+        $comment->rating = $validatedData['rating'];
         $comment->chatbot_id = $request->chatbot_id;
         $comment->save();
 

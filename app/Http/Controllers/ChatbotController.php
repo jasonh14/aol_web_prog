@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Chatbot;
 use App\Models\Comment;
+use App\Models\User;
+use App\Jobs\SendChatResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
@@ -24,7 +26,24 @@ class ChatbotController extends Controller
     {
         $chatbots = Chatbot::all();
 
-        return view("explore", ['chatbots' => $chatbots]);
+        // Map the chatbot_id with their average rating
+        $avgRating = $chatbots->mapWithKeys(function ($chatbot) {
+            $averageRating = Comment::where('chatbot_id', $chatbot->id)
+                                    ->avg('rating');
+            return [$chatbot->id => $averageRating];
+        });
+
+        $usersCount = User::count();
+        $messagesCount = ChatMessage::count();
+        $chatbotsCount = $chatbots->count();
+
+        return view("explore", [
+            'chatbots' => $chatbots,
+            'avgRatings' => $avgRating,
+            'usersCount' => $usersCount,
+            'messagesCount' => $messagesCount,
+            'chatbotsCount' => $chatbotsCount
+        ]);
     }
 
     public function processUpload(Request $request)
@@ -63,7 +82,7 @@ class ChatbotController extends Controller
 
     public function chat(string $id)
     {
-        $comments = Comment::where('chatbot_id', $id)->with('user')->get();
+        $comments = Comment::where('chatbot_id', $id)->with('user')->orderBy('createdAt','desc')->get();
         $user = Auth::user();
         $session = ChatSession::firstOrCreate([
             'chatbot_id' => $id,
@@ -92,14 +111,12 @@ class ChatbotController extends Controller
         $replyToken = Str::random(40);
 
         $payload = [
-            'client_display_name' => $user->name,
+            'client_display_name' => $user->display_name,
             'client_id' => $user->id,
             'message' => $request->message,
             'timestamp' => now(),
             'replyToken' => $replyToken,
         ];
-
-        Http::post($chatbot->chatbot_webhook_url, $payload);
 
         $session = ChatSession::firstOrCreate([
             'chatbot_id' => $id,
@@ -119,6 +136,9 @@ class ChatbotController extends Controller
             'usage_left' => 5,
         ]);
 
+        // Http::post($chatbot->chatbot_webhook_url, $payload);
+        SendChatResponse::dispatch($chatbot->chatbot_webhook_url, $payload);
+
         return redirect()->back();
     }
 
@@ -137,6 +157,7 @@ class ChatbotController extends Controller
 
     public function onMessageReceived(Request $request)
     {
+        error_log('On Message Received called!');
         $replyToken = $request->header('ReplyToken');
 
         $tokenRecord = ReplyToken::where('token', $replyToken)->first();
@@ -156,6 +177,8 @@ class ChatbotController extends Controller
 
     public function checkNewMessages($id)
     {
+        error_log("checkNewMessages called with id: $id");
+
         $lastMessageId = request()->query('lastMessageId', 0);
         $newMessages = ChatMessage::where('session_id', $id)
             ->where('id', '>', $lastMessageId)

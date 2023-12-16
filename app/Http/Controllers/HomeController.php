@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Chatbot;
+use App\Models\User;
+use App\Models\ChatMessage;
+use App\Models\Comment;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +26,24 @@ class HomeController extends Controller
     {
         $chatbots = Chatbot::all();
 
-        return view("home", ['chatbots' => $chatbots]);
+        // Map the chatbot_id with their average rating
+        $avgRating = $chatbots->mapWithKeys(function ($chatbot) {
+            $averageRating = Comment::where('chatbot_id', $chatbot->id)
+                                    ->avg('rating');
+            return [$chatbot->id => $averageRating];
+        });
+
+        $usersCount = User::count();
+        $messagesCount = ChatMessage::count();
+        $chatbotsCount = $chatbots->count();
+
+        return view("home", [
+            'chatbots' => $chatbots,
+            'avgRatings' => $avgRating,
+            'usersCount' => $usersCount,
+            'messagesCount' => $messagesCount,
+            'chatbotsCount' => $chatbotsCount
+        ]);
     }
+
 }

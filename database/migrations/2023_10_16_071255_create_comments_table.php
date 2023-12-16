@@ -23,6 +23,7 @@ return new class extends Migration
 
             $table->integer('replied_comment_id')->nullable()->index('replied_comment_id');
             $table->text('content');
+            $table->decimal('rating');
             $table->timestamp('createdAt')->useCurrent();
             $table->timestamp('deletedAt')->nullable();
             $table->timestamp('updatedAt')->nullable();

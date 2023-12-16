@@ -49,6 +49,7 @@ class Comment extends Model
         'chatbot_id',
         'replied_comment_id',
         'content',
+        'rating',
         'createdAt',
         'deletedAt',
         'updatedAt'
